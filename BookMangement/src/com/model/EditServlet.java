@@ -1,0 +1,65 @@
+package com.model;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.dao.UserDao;
+import com.dao.UserDaoImpl;
+import com.dao.bookDetail;
+
+/**
+ * Servlet implementation class EditServlet
+ */
+@WebServlet("/EditServlet")
+public class EditServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public EditServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		response.getWriter().print("You hv Select Bookid " + id);
+		
+		UserDao userDao=new UserDaoImpl();
+		
+		bookDetail userById = userDao.getUserById(id);
+		
+		System.out.println(userById);
+		
+		if(userById !=null) {
+			request.setAttribute("book",userById);
+			request.getRequestDispatcher("edit-user.jsp").forward(request, response);
+			
+		}
+		
+		
+		
+		
+		
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
